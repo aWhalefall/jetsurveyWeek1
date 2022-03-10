@@ -65,7 +65,6 @@ android {
 
     buildFeatures {
         compose true
-
         // Disable unused AGP features
         buildConfig false
         aidl false
