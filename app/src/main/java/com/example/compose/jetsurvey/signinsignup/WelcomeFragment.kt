@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.viewModels
 import com.example.compose.jetsurvey.Screen
 import com.example.compose.jetsurvey.navigate
+import com.example.compose.jetsurvey.theme.JetsurveyTheme
 
 class WelcomeFragment : BaseFragment() {
 
@@ -28,8 +30,20 @@ class WelcomeFragment : BaseFragment() {
             }
         }
 
-        val view = TextView(activity)
-        view.text = "hello world "
-        return view
+        return ComposeView(requireContext()).apply {
+            setContent {
+                JetsurveyTheme {
+                    WelcomeScreen(
+                        onEvent = { event ->
+                            when (event) {
+                                is WelcomeEvent.SignInSignUp -> viewModel.handeContinue(event.email)
+                                WelcomeEvent.SignInAsGuest -> viewModel.signInAsGuest()
+                            }
+                        }
+                    )
+
+                }
+            }
+        }
     }
 }
