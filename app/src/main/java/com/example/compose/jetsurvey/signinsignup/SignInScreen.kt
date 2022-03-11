@@ -6,6 +6,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.theme.JetsurveyTheme
 import com.example.compose.jetsurvey.theme.snackbarAction
 import com.example.compose.jetsurvey.util.supportWideScreen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -69,11 +71,8 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                 })
                 Spacer(modifier = Modifier.height(16.dp))
                 TextButton(onClick = {
-                    scope.launch {
-                        snackBarHostState.showSnackbar(
-                            message = snackbarErrorText, actionLabel = snackbarActionLabel
-                        )
-                    }
+                    onNavigationEvent(SignInEvent.SignUp)
+                  //showSnack(scope, snackBarHostState, snackbarErrorText, snackbarActionLabel)
                 }, modifier = Modifier.fillMaxWidth()) {
                     Text(text = stringResource(id = R.string.forgot_password))
                 }
@@ -91,6 +90,20 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
+}
+
+@Composable
+private  fun showSnack(
+    scope: CoroutineScope,
+    snackBarHostState: SnackbarHostState,
+    snackbarErrorText: String,
+    snackbarActionLabel: String
+) {
+//    scope.launch {
+//        snackBarHostState.showSnackbar(
+//            message = snackbarErrorText, actionLabel = snackbarActionLabel
+//        )
+//    }
 }
 
 @Composable
