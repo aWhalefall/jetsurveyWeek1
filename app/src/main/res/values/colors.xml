@@ -16,4 +16,5 @@
   -->
 <resources>
     <color name="status_bar_color">#EFEFEF</color>
+    <color name="red">#ff0000</color>
 </resources>

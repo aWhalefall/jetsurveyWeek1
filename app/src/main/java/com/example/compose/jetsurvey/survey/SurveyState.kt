@@ -22,6 +22,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
+/**
+ * 问题状态
+ */
 @Stable
 class QuestionState(
     val question: Question,
@@ -34,6 +37,9 @@ class QuestionState(
     var answer by mutableStateOf<Answer<*>?>(null)
 }
 
+/**
+ * 问卷调查状态
+ */
 sealed class SurveyState {
     data class Questions(
         @StringRes val surveyTitle: Int,
