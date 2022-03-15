@@ -61,12 +61,12 @@ class SurveyFragment : BaseFragment() {
                                     )
                                 }
                             )
-//                            is SurveyState.Result -> SurveyResultScreen(
-//                                result = surveyState,
-//                                onDonePressed = {
-//                                    activity?.onBackPressedDispatcher?.onBackPressed()
-//                                }
-//                            )
+                            is SurveyState.Result -> SurveyResultScreen(
+                                result = surveyState,
+                                onDonePressed = {
+                                    activity?.onBackPressedDispatcher?.onBackPressed()
+                                }
+                            )
                         }
                     }
                 }
@@ -74,6 +74,7 @@ class SurveyFragment : BaseFragment() {
 
         }
     }
+
 
     private fun handleSurveyAction(questionId: Int, actionType: SurveyActionType) {
         when (actionType) {

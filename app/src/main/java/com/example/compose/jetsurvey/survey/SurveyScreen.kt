@@ -1,7 +1,9 @@
 package com.example.compose.jetsurvey.survey
 
+import android.widget.Space
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -20,12 +22,59 @@ import androidx.compose.ui.unit.dp
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.theme.progressIndicatorBackground
 import com.example.compose.jetsurvey.util.supportWideScreen
+import java.io.StringReader
 
 /**
  * @author kuaidao@reworldgame.com
  * @date 2022/3/14 10:04
  * Mvi 数据驱动
  */
+
+
+@Composable
+fun SurveyResultScreen(result: SurveyState.Result, onDonePressed: () -> Unit?) {
+    Surface(modifier = Modifier.supportWideScreen()) {
+        Scaffold(content = {
+            val modifier = Modifier.padding(it)
+            SurveyResult(result, modifier)
+        }, bottomBar = {
+            OutlinedButton(
+                onClick = { onDonePressed }, modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxWidth()
+            ) {
+                Text(text = stringResource(id = R.string.done))
+            }
+        })
+    }
+
+}
+
+@Composable
+fun SurveyResult(result: SurveyState.Result, modifier: Modifier) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        item {
+            Spacer(modifier = modifier.height(44.dp))
+            Text(
+                text = result.surveyResult.library,
+                style = MaterialTheme.typography.h3,
+                modifier = modifier.padding(horizontal = 20.dp)
+            )
+            Text(
+                text = stringResource(result.surveyResult.result, result.surveyResult.library),
+                style = MaterialTheme.typography.subtitle1,
+                modifier = Modifier.padding(20.dp)
+            )
+            Text(
+                text = stringResource(result.surveyResult.description),
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+
+        }
+    }
+
+}
 
 
 @Composable
