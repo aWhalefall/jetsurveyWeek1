@@ -41,6 +41,7 @@ class QuestionState(
  * 问卷调查状态
  */
 sealed class SurveyState {
+
     data class Questions(
         @StringRes val surveyTitle: Int,
         val questionsState: List<QuestionState>

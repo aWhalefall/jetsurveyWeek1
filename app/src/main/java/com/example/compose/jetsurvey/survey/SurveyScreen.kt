@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.jetsurvey.R
 import com.example.compose.jetsurvey.theme.progressIndicatorBackground
@@ -90,7 +91,6 @@ fun SurveyQuestionScreen(
     val questionState = remember(questions.currentQuestionIndex) {
         questions.questionsState[questions.currentQuestionIndex]
     }
-
     Surface(modifier = Modifier.supportWideScreen()) {
         Scaffold(
             topBar = {
@@ -130,6 +130,13 @@ fun SurveyQuestionScreen(
     }
 
 }
+
+@Preview
+@Composable
+fun TopBar(){
+    SurveyTopAppBar(questionIndex = 0, totalQuestionsCount = 6, onBackPressed = {})
+}
+
 
 @Composable
 fun SurveyTopAppBar(questionIndex: Int, totalQuestionsCount: Int, onBackPressed: () -> Unit) {

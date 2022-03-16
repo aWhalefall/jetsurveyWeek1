@@ -455,7 +455,6 @@ private fun DateQuestion(
 }
 
 
-
 @Composable
 private fun MultipleChoiceQuestion(
     possibleAnswer: PossibleAnswer.MultipleChoice,
@@ -602,6 +601,80 @@ fun SingleChoiceIconQuestion(
     modifier: Modifier
 ) {
 
+
+    val options = possibleAnswer.optionsStringIconRes.associateBy { stringResource(id = it.second) }
+
+    val radioOptions = options.keys.toList()
+
+    val selected = if (answer != null) {
+        stringResource(id = answer.answer)
+    } else {
+        null
+    }
+
+    val (selectedOption, onOptionSelected) = remember(answer) {
+        mutableStateOf(selected)
+    }
+
+    Column(modifier = modifier) {
+        radioOptions.forEach { text ->
+
+            val onclickHandle = {
+                onOptionSelected(text)
+                options[text]?.let { onAnswerSelected(it.second) }
+                Unit
+            }
+            val optionSelected = text == selectedOption
+            val answerBorderColor = if (optionSelected) {
+                MaterialTheme.colors.primary.copy(alpha = 0.5f)
+            } else {
+                MaterialTheme.colors.primary.copy(alpha = 0.12f)
+            }
+            val answerBackgroundColor = if (optionSelected) {
+                MaterialTheme.colors.primary.copy(alpha = 0.12f)
+            } else {
+                MaterialTheme.colors.background
+            }
+            Surface(
+                shape = MaterialTheme.shapes.small,
+                border = BorderStroke(width = 1.dp, color = answerBorderColor),
+                modifier = Modifier.padding(vertical = 8.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .selectable(
+                            selected = optionSelected, onClick = onclickHandle
+                        )
+                        .background(answerBackgroundColor)
+                        .padding(vertical = 16.dp, horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    options[text]?.let {
+                        Image(
+                            painter = painterResource(id = it.first), contentDescription = null,
+                            modifier = Modifier
+                                .width(56.dp)
+                                .height(56.dp)
+                                .clip(MaterialTheme.shapes.medium)
+                        )
+                    }
+                    Text(text = text)
+
+                    RadioButton(
+                        selected = optionSelected,
+                        onClick = onclickHandle,
+                        colors = RadioButtonDefaults.colors(
+                            selectedColor = MaterialTheme.colors.primary
+                        )
+                    )
+
+                }
+
+            }
+        }
+    }
 
 }
 

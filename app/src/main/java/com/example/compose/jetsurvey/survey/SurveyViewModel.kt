@@ -14,7 +14,7 @@ const val simpleDateFormatPattern = "EEE, MMM d"
 class SurveyViewModel(
     private val surveyRepository: SurveyRepository,
     private val photoUriManager: PhotoUriManager
-):ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableLiveData<SurveyState>()
     val uiState: LiveData<SurveyState>
