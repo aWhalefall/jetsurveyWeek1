@@ -27,13 +27,15 @@ fun HelloContent() {
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 fun HelloScreen() {
     //状态提升
     var name by remember { mutableStateOf("") }
     HelloContent2(name = name, onValueChange = { name = it })
 }
+
+
 
 
 @Composable

@@ -46,9 +46,9 @@ fun SignInPreView() {
 
 @Composable
 fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
-    val snackBarHostState = remember {
-        SnackbarHostState()
-    }
+    val snackBarHostState = remember { SnackbarHostState() }
+    //获取组合感知作用域，以便在可组合项外启动协程
+    // 是一个可组合函数，会返回一个 CoroutineScope，该 CoroutineScope 绑定到调用它的组合点。调用退出组合后，作用域将取消
     val scope = rememberCoroutineScope()
     val snackbarErrorText = stringResource(id = R.string.feature_not_available)
     val snackbarActionLabel = stringResource(id = R.string.dismiss)
@@ -71,8 +71,12 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
                 })
                 Spacer(modifier = Modifier.height(16.dp))
                 TextButton(onClick = {
-                    onNavigationEvent(SignInEvent.SignUp)
-                  //showSnack(scope, snackBarHostState, snackbarErrorText, snackbarActionLabel)
+                    scope.launch {
+                        snackBarHostState.showSnackbar(
+                            snackbarErrorText,
+                            actionLabel = snackbarActionLabel
+                        )
+                    }
                 }, modifier = Modifier.fillMaxWidth()) {
                     Text(text = stringResource(id = R.string.forgot_password))
                 }
@@ -84,7 +88,7 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
 
     Box(modifier = Modifier.fillMaxWidth()) {
         ErrorSnackBar(
-            snackbarHostState = snackBarHostState,onDismiss = {
+            snackbarHostState = snackBarHostState, onDismiss = {
                 snackBarHostState.currentSnackbarData?.dismiss()
             },
             modifier = Modifier.align(Alignment.BottomCenter)
@@ -93,7 +97,7 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
 }
 
 @Composable
-private  fun showSnack(
+private fun showSnack(
     scope: CoroutineScope,
     snackBarHostState: SnackbarHostState,
     snackbarErrorText: String,
